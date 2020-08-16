@@ -1,7 +1,9 @@
 try %{
+    # Declare highlighters for the tasks buffer
     add-highlighter global/gradle_tasks_buffer group
     add-highlighter global/gradle_tasks_buffer/task regex "(^[a-zA-Z0-9]*)( - [^\n]*)" 0:string 1:type
 
+	# Declare highlighters for the dependencies buffer
 	add-highlighter global/gradle_dep_buffer group
     add-highlighter global/gradle_dep_buffer/category regex "(^[a-zA-Z0-9]*)( - [^\n]*)" 0:string 1:type
     add-highlighter global/gradle_dep_buffer/dependency regex "([+\\]---)( [^\n]*)" 0:keyword 1:string
@@ -13,6 +15,7 @@ try %{
     echo -debug "            Detailed error: %val{error}"
 }
 
+# Enable the highlighters for the gradle-tasks filetype
 hook -group gradle-tasks-syntax global WinSetOption filetype=gradle-tasks %{
     add-highlighter buffer/gradle_tasks_buffer ref gradle_tasks_buffer
     hook -always -once window WinSetOption filetype=.* %{
@@ -20,6 +23,7 @@ hook -group gradle-tasks-syntax global WinSetOption filetype=gradle-tasks %{
     }
 }
 
+# Enable the highlighters for the gradle-deps filetype
 hook -group gradle-deps-syntax global WinSetOption filetype=gradle-deps %{
     add-highlighter buffer/gradle_dep_buffer ref gradle_dep_buffer
     hook -always -once window WinSetOption filetype=.* %{
@@ -29,7 +33,7 @@ hook -group gradle-deps-syntax global WinSetOption filetype=gradle-deps %{
 
 define-command -docstring "Execute arbitrary gradle command" -params .. gradle %{
     evaluate-commands %sh{
-        echo "terminal gradle $@"
+        echo "terminal ./gradle_wrap.sh $@"
     }
 }
 
@@ -66,12 +70,12 @@ define-command -docstring "List project dependencies" gradle-dependencies %{
         tmp=$(mktemp -d "${TMPDIR:-/tmp}/kak-gradle.XXXXXXXX")
         fifo=$tmp/fifo
         mkfifo ${fifo}
+		# Run "gradle dependencies" in the background and extract the dependencies and "legend"
+        (gradle dependencies | grep -E '^[a-zA-Z0-9]* -|[+\]--- |No dependencies|\([*n]\)|^$' > ${fifo} 2>&1 & ) > /dev/null 2>&1 < /dev/null
 
         printf "%s\n" "edit! -fifo ${fifo} *gradle*
         	set-option buffer filetype gradle-deps
         	hook -always -once buffer BufCloseFifo .* %{ nop %sh{ rm -rf ${tmp} } }"
-
-        (gradle dependencies | grep -E '^[a-zA-Z0-9]* -|[+\]--- |No dependencies|\([*n]\)|^$' > ${fifo} 2>&1 & ) > /dev/null 2>&1 < /dev/null
     }
 }
 
@@ -80,6 +84,6 @@ define-command -hidden gradle-fifo-operate %{ evaluate-commands -save-regs t %{
     set-register t %val{selection}
     evaluate-commands %sh{
         task="${kak_reg_t%:*}"
-        echo "terminal gradle $task"
+        echo "terminal ./gradle_wrap.sh $task"
     }
 }}
