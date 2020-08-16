@@ -1,3 +1,5 @@
+decl -hidden str gradle_wrap %sh{ printf "%s/%s" "${kak_source%/*}" "gradle_wrap.sh" }
+
 try %{
     # Declare highlighters for the tasks buffer
     add-highlighter global/gradle_tasks_buffer group
@@ -33,7 +35,7 @@ hook -group gradle-deps-syntax global WinSetOption filetype=gradle-deps %{
 
 define-command -docstring "Execute arbitrary gradle command" -params .. gradle %{
     evaluate-commands %sh{
-        echo "terminal ./gradle_wrap.sh $@"
+        echo "terminal ${kak_opt_gradle_wrap} $@"
     }
 }
 
@@ -84,6 +86,6 @@ define-command -hidden gradle-fifo-operate %{ evaluate-commands -save-regs t %{
     set-register t %val{selection}
     evaluate-commands %sh{
         task="${kak_reg_t%:*}"
-        echo "terminal ./gradle_wrap.sh $task"
+        echo "terminal ${kak_opt_gradle_wrap} $task"
     }
 }}
