@@ -6,7 +6,7 @@
 
 ## Installation
 
-### Plug.kak or Plug-lite.kak
+### Plug.kak
 
 Add the following to your `kakrc`:
 
