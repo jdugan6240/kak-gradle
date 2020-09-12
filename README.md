@@ -16,10 +16,11 @@ plug "jdugan6240/kak-gradle"
 
 ### Manual installation
 
-Clone this repo anywhere, and then add the following line to your `kakrc`:
+Clone this repo anywhere, and then add the following lines to your `kakrc`:
 
 ```
-source /path_to_cloned_repo/kak-gradle.kak
+source /path_to_cloned_repo/rc/kak-gradle.kak
+source /path_to_cloned_repo/rc/groovy-gradle.kak #For .gradle file highlighting and indentation
 ```
 
 ## Usage

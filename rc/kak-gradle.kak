@@ -1,4 +1,4 @@
-decl -hidden str gradle_wrap %sh{ printf "%s/%s" "${kak_source%/*}" "gradle_wrap.sh" }
+decl -hidden str gradle_wrap %sh{ printf "%s/../%s" "${kak_source%/*}" "gradle_wrap.sh" }
 
 try %{
     # Declare highlighters for the tasks buffer
