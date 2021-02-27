@@ -72,6 +72,8 @@ define-command -docstring "Execute arbitrary gradle command" -params .. gradle %
         if [ "$kak_opt_gradle_root_dir" == '' ]; then
             echo "gradle-root-dir"
         fi
+    }
+    evaluate-commands %sh{
         # Determine if we need to use the gradle wrapper, or use the systemwide gradle command
         if [ "$kak_opt_gradle_use_gradlew" = "true" ]; then
             echo "terminal ${kak_opt_gradlew_wrap} $kak_opt_gradle_root_dir $@"
@@ -95,6 +97,8 @@ define-command -docstring "List subprojects" gradle-projects %{
         if [ "$kak_opt_gradle_root_dir" == '' ]; then
             echo "gradle-root-dir"
         fi
+    }
+    evaluate-commands %sh{
         # Determine if we need to use the gradle wrapper, or use the systemwide gradle command
         if [ "$kak_opt_gradle_use_gradlew" = "true" ]; then
             echo "set-option global gradle_command $kak_opt_gradle_root_dir/gradlew"
@@ -102,7 +106,7 @@ define-command -docstring "List subprojects" gradle-projects %{
             echo "set-option global gradle_command gradle"
         fi
     }
-    info -title "Subprojects" %sh{ $gradle_command projects | grep -E "Root project[^\n]+|Project" }
+    info -title "Subprojects" %sh{ $kak_opt_gradle_command projects | grep -E "Root project[^\n]+|Project" }
 }
 
 define-command -docstring "List available gradle tasks" gradle-tasks %{
@@ -111,6 +115,8 @@ define-command -docstring "List available gradle tasks" gradle-tasks %{
         if [ "$kak_opt_gradle_root_dir" == '' ]; then
             echo "gradle-root-dir"
         fi
+    }
+    evaluate-commands %sh{
         # Determine if we need to use the gradle wrapper, or use the systemwide gradle command
         if [ "$kak_opt_gradle_use_gradlew" = "true" ]; then
             echo "set-option global gradle_command $kak_opt_gradle_root_dir/gradlew"
@@ -138,6 +144,8 @@ define-command -docstring "List project dependencies" gradle-dependencies %{
         if [ "$kak_opt_gradle_root_dir" == '' ]; then
             echo "gradle-root-dir"
         fi
+    }
+    evaluate-commands %sh{
         # Determine if we need to use the gradle wrapper, or use the systemwide gradle command
         if [ "$kak_opt_gradle_use_gradlew" = "true" ]; then
             echo "set-option global gradle_command $kak_opt_gradle_root_dir/gradlew"
