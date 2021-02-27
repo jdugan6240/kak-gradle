@@ -6,12 +6,20 @@
 
 ## Installation
 
-### Plug.kak
+### andreyorst's plug.kak
 
 Add the following to your `kakrc`:
 
 ```
 plug "jdugan6240/kak-gradle"
+```
+
+### alexherbo2's plug.kak
+
+Add the following to your `kakrc`:
+
+```
+plug-old kak-gradle https://github.com/jdugan6240/kak-gradle
 ```
 
 ### Manual installation
@@ -30,10 +38,16 @@ The first step in using the plugin is to ensure that the gradle daemon is starte
 do this is to simply run the command:
 
 ```
-:gradle-init
+:gradle
 ```
 
 Now that the gradle daemon is started, various gradle tasks can be run from within Kakoune.
+
+## Options
+
+kak-gradle offers one configuration option, `gradle_use_gradlew`. This is a boolean option that,
+if set to `true`, tells kak-gradle to use the current gradle project's own wrapper. If false, then
+the plugin will default to using the systemwide gradle installation.
 
 ### Gradle-tasks
 
@@ -46,7 +60,7 @@ the current line.
 
 - gradle - Executes any arbitrary gradle command in a terminal.
 - gradle-init - Initializes a gradle project in the current working directory, if one doesn't exist already.
-- gradle-wrapper - Generates the gradle wrapper files.
+- gradle-wrapper - Generates the gradle wrapper files. This accepts arguments as the "gradle wrapper" command would.
 - gradle-projects - Lists the subprojects of the current gradle project, if any.
 - gradle-tasks - Shows the possible tasks that can be performed.
 - gradle-dependencies - Shows a tree view of the dependencies in the current gradle project. 
