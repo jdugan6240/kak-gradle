@@ -1,25 +1,25 @@
 # kak-gradle 
 
-**kak-gradle** is a plugin that integrates the Gradle build system into kakoune.
+**kak-gradle** is a plugin that integrates the Gradle build system into Kakoune.
 
 ![](screenshot.png)
 
 ## Installation
 
-### andreyorst's plug.kak
+### plug.kak
 
 Add the following to your `kakrc`:
 
 ```
-plug "jdugan6240/kak-gradle"
+plug "https://codeberg.org/jdugan6240/kak-gradle"
 ```
 
-### alexherbo2's plug.kak
+### kak-bundle
 
 Add the following to your `kakrc`:
 
 ```
-plug-old kak-gradle https://github.com/jdugan6240/kak-gradle
+bundle https://github.com/jdugan6240/kak-gradle
 ```
 
 ### Manual installation
@@ -28,7 +28,7 @@ Clone this repo anywhere, and then add the following lines to your `kakrc`:
 
 ```
 source /path_to_cloned_repo/rc/kak-gradle.kak
-source /path_to_cloned_repo/rc/groovy-gradle.kak #For .gradle file highlighting and indentation
+source /path_to_cloned_repo/rc/groovy-gradle.kak # For .gradle file highlighting and indentation
 ```
 
 ## Usage
