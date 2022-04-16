@@ -1,8 +1,5 @@
-#decl -hidden str gradle_wrap %sh{ printf "%s/../src/%s" "${kak_source%/*}" "gradle_wrap.sh" }
-#decl -hidden str gradlew_wrap %sh{ printf "%s/../src/%s" "${kak_source%/*}" "gradlew_wrap.sh" }
-
-declare-option -hidden gradle_wrap "%val{source}/gradle_wrap.sh"
-declare-option -hidden gradlew_wrap "%val{source}/gradlew_wrap.sh"
+declare-option -hidden str gradle_wrap "%val{source}/gradle_wrap.sh"
+declare-option -hidden str gradlew_wrap "%val{source}/gradlew_wrap.sh"
 declare-option -docstring "Determines the root directory of the current gradle project" str gradle_root_dir ""
 declare-option -docstring "Determines whether to use the project's gradle wrapper or the systemwide gradle installation" bool gradle_use_gradlew false
 declare-option -hidden str gradle_command "gradle"
